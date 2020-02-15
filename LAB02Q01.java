@@ -47,7 +47,7 @@ public class LAB02Q01{
 				resp = resp+dois.charAt(i);
 		}
 
-		return resp;
+		return resp+'\r';
 	}
 }
 
