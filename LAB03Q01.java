@@ -10,11 +10,11 @@ public class LAB03Q01{
 	* Metodo main
 	*/
 	public static void main (String[] args){
-		String s = MyIO.readString();	
+		String s = MyIO.readLine();	
 
 		while (!isEnd(s)){
 			espelho(s);
-			s = MyIO.readString();
+			s = MyIO.readLine();
 		}
 	}
 	
@@ -34,11 +34,14 @@ public class LAB03Q01{
 	*@param String
 	*/
 	public static void espelho (String s){
-		String resp = "";
-		String[] nums = s.split(" ", 2);
+
+		String[] nums = s.split(" ", 3);
+
+
 		int ini = Integer.parseInt(nums[0]);
 		int fim = Integer.parseInt(nums[1]);
 		espelho(ini, fim);
+		MyIO.println("");
 	}
 
 	/**
