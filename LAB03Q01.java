@@ -13,7 +13,7 @@ public class LAB03Q01{
 		String s = MyIO.readString();	
 
 		while (!isEnd(s)){
-			(espelho(s);
+			espelho(s);
 			s = MyIO.readString();
 		}
 	}
@@ -36,7 +36,9 @@ public class LAB03Q01{
 	public static void espelho (String s){
 		String resp = "";
 		String[] nums = s.split(" ", 2);
-		espelho(nums[0], nums[1]);
+		int ini = Integer.parseInt(nums[0]);
+		int fim = Integer.parseInt(nums[1]);
+		espelho(ini, fim);
 	}
 
 	/**
