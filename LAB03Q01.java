@@ -37,22 +37,43 @@ public class LAB03Q01{
 
 		String[] nums = s.split(" ", 3);
 
-
 		int ini = Integer.parseInt(nums[0]);
 		int fim = Integer.parseInt(nums[1]);
-		espelho(ini, fim);
+		espelhar (seq(ini, fim));
+
+	}
+
+	/**
+	*sequencia - cria uma sequencia de numeros
+	*@param int int 
+	*@return String
+	*/
+	public static String seq (int ini, int fim){
+		String numeros = "";
+		if (ini <= fim){
+			numeros = numeros + ini + seq(ini+1, fim);
+		}
+		return numeros;
+	}
+	
+	/**
+	*espelhar - mostra a sequencia espelhada
+	*@param String
+	*/
+	public static void espelhar (String s){
+		espelhar (s, 0);
 		MyIO.println("");
 	}
 
 	/**
-	*espelho - overload
-	*@param int int 
+	*espelhar - overload
+	*@param String int
 	*/
-	public static void espelho (int ini, int fim){
-		if (ini <= fim){
-			MyIO.print(ini);
-			espelho(ini+1, fim);
-			MyIO.print(ini);
+	public static void espelhar (String s, int i){
+		if (i < s.length()){
+			MyIO.print(s.charAt(i));
+			espelhar(s, i+1);
+			MyIO.print(s.charAt(i));
 		}
 	}
 }
