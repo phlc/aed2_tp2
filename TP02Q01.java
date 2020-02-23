@@ -179,12 +179,32 @@ class Personagem {
 	}
 
 //clone
+	/*
+	*clone
+	*@param Personagem
+	*@return Personagem
+	*/
 	public Personagem clone(Personagem a){
 		return (new Personagem(a.nome, a.altura, a.peso, a.corDoCabelo,
 			a.corDaPele, a.corDosOlhos, a.anoNascimento, a.genero,
 			a.homeworld));
 	}
 
+//imprimir
+	/*
+	*imprimir
+	*/
+	public void imprimir(){
+			
+	}
 
+//ler
+	/*
+	*ler
+	*@return
+	*/
+	public String ler(){
+	
+	}
 
 }
