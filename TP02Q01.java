@@ -2,7 +2,8 @@
 * Classe Personagem
 */
 class Personagem {
-	//atributos
+
+//atributos
 	private String nome;
 	private int altura;
 	private int peso;
@@ -13,10 +14,11 @@ class Personagem {
 	private int genero;
 	private String homeworld;
 
-	//construtores
+//construtores
 	
 
-	//metodos
+//metodos
+ //gets
 	/*
 	*getNome
 	*@return String nome
@@ -87,5 +89,78 @@ class Personagem {
 	*/
 	public String getHomeworld(){
 		return(this.homeworld);
+	}
+
+//sets
+	/*
+	*setNome
+	*@param String nome
+	*/
+	public void setNome(String nome){
+		this.nome = nome;
+	}	
+
+	/*
+	*setAltura
+	*@param int altura
+	*/
+	public void setAlgura(int altura){
+		this.altura = altura;
+	}
+
+	/*
+	*setPeso
+	*@param int peso
+	*/
+	public void setPeso(int peso){
+		this.peso = peso;
+	}
+
+	/*
+	*setCorDoCabelo
+	*@param String corDoCabelo
+	*/
+	public void setCorDoCabelo (String corDoCabelo){
+		this.corDoCabelo = corDoCabelo;
+	}
+
+	/*
+	*setCorDaPele
+	*@param String corDaPele
+	*/
+	public void setCorDaPelo(String corDaPelo){
+		this.corDaPele = corDaPele;
+	}
+
+	/*
+	*setCorDosOlhos
+	*@param String corDosOlhos
+	*/
+	public void setCorDosOlhos(String corDosOlhos){
+		this.corDosOlhos = corDosOlhos;
+	}
+
+	/*
+	*setAnoNascimento
+	*@param String anoNascimento
+	*/
+	public void setAnoNascimento(String anoNascimento){
+		this.anoNascimento = anoNascimento;
+	}
+
+	/*
+	*setGenero
+	*@param int genero
+	*/
+	public void setGenero(int genero){
+		this.genero = genero;
+	}
+
+	/*
+	*setHomeworld
+	*@param String homeworld
+	*/
+	public void setHomeworld(String homeworld){
+		this.homeworld = homeworld;
 	}
 }
