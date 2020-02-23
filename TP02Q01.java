@@ -15,6 +15,20 @@ class Personagem {
 	private String homeworld;
 
 //construtores
+	Personagem(String nome, int altura, int peso, String corDoCabelo,
+		   String corDaPele, String corDosOlhos, String anoNascimento,
+		   int genero, String homeworld){
+
+		this.nome = nome;
+		this.altura = altura;
+		this.peso = peso;
+		this.corDoCabelo = corDoCabelo;
+		this.corDaPele = corDaPele;
+		this.corDosOlhos = corDosOlhos;
+		this.anoNascimento = anoNascimento;
+		this.genero = genero;
+		this.homeworld = homeworld;
+	}
 	
 
 //metodos
@@ -163,4 +177,14 @@ class Personagem {
 	public void setHomeworld(String homeworld){
 		this.homeworld = homeworld;
 	}
+
+//clone
+	public Personagem clone(Personagem a){
+		return (new Personagem(a.nome, a.altura, a.peso, a.corDoCabelo,
+			a.corDaPele, a.corDosOlhos, a.anoNascimento, a.genero,
+			a.homeworld));
+	}
+
+
+
 }
