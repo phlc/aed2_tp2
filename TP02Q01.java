@@ -195,7 +195,17 @@ class Personagem {
 	*imprimir
 	*/
 	public void imprimir(){
-			
+		MyIO.print(" ## "+this.nome);
+		MyIO.print(" ## "+this.altura);
+		MyIO.print(" ## "+this.peso);
+		MyIO.print(" ## "+this.corDoCabelo);
+		MyIO.print(" ## "+this.corDapele);
+		MyIO.print(" ## "+this.corDosOlhos);
+		MyIO.print(" ## "+this.anoNascimento);
+		MyIO.print(" ## "+this.genero);
+		MyIO.print(" ## "+this.homeworld);
+		MyIO.println(" ## ");
+
 	}
 
 //ler
