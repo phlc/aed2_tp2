@@ -199,7 +199,7 @@ class Personagem {
 		MyIO.print(" ## "+this.altura);
 		MyIO.print(" ## "+this.peso);
 		MyIO.print(" ## "+this.corDoCabelo);
-		MyIO.print(" ## "+this.corDapele);
+		MyIO.print(" ## "+this.corDaPele);
 		MyIO.print(" ## "+this.corDosOlhos);
 		MyIO.print(" ## "+this.anoNascimento);
 		MyIO.print(" ## "+this.genero);
@@ -214,7 +214,10 @@ class Personagem {
 	*@return
 	*/
 	public String ler(){
-	
+		return( " ## "+this.nome+" ## "+this.altura+" ## "+this.peso+
+		       " ## "+this.corDoCabelo+" ## "+this.corDaPele+" ## "+
+		       this.corDosOlhos+" ## "+this.anoNascimento+" ## "+this.genero+
+		       " ## "+this.homeworld+" ## ");	
 	}
 
 }
