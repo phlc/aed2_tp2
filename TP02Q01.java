@@ -227,4 +227,53 @@ class Personagem {
 		       " ## "+this.homeworld+" ## ");	
 	}
 
+//metodos estaticos publicos
+
+ //isFim
+	/**
+	*isFim - verifica FIM
+	*@param String
+	*@return boolean
+	*/
+	public static boolean isFim(String s){
+		return (s.equals("FIM"));
+	}
+
+ //toIso
+	/**
+	*toIso - muda o encoding de uma String para ISO
+	*@param String UTF-8
+	*@return String ISO
+	*/
+	public static String toIso(String s) throws Exception{
+		return (new String(s.getBytes("UTF-8"), "ISO-8859-1"));
+	}
+
+ //toUtf
+	/**
+	*toUtf - muda o encoding de uma String para UTF-8
+	*@param String ISO
+	*@return String UTF-8
+	*/
+	public static String toUtf(String s) throws Exception{
+		return(new String(s.getBytes("ISO-8859-1"), "UTF-8"));
+	}
+
+
+}
+
+/**
+*Classe Main
+*/
+public class TP02Q01{
+	
+	/**
+	*Metodo main
+	*/
+	public static void main(String[] args){
+	
+	}
+
+	
+
 }
