@@ -36,8 +36,26 @@ class Personagem {
 		Arq.close();
 		
 		String[] dados = parsePersonagem(lida);
-
-		
+	
+		this.nome = dados[0];
+		try{
+			this.altura = Integer.parseInt(dados[1]);
+		}
+		catch(Exception e){
+			this.altura = 0;
+		}
+		try{
+			this.peso = Double.parseDouble(dados[2]);
+		}
+		catch(Exception e){
+			this.peso = 0;
+		}
+		this.corDoCabelo = dados[3];
+		this.corDaPele = dados[4];
+		this.corDosOlhos = dados[5];
+		this.anoNascimento = dados[6];
+		this.genero = dados[7];
+		this.homeworld = dados[8];		
 	}
 
 //metodos
@@ -267,7 +285,7 @@ class Personagem {
 	*@param String
 	*@return String[]
 	*/
-	public static String[] parsePersonagem(String s){
+	private static String[] parsePersonagem(String s){
 		String[] dados = new String[9];
 
 		s = s.replaceAll("\'", "");
@@ -290,28 +308,18 @@ public class TP02Q01{
 	/**
 	*Metodo main
 	*/
-	public static void main(String[] args){
+	public static void main(String[] args) throws Exception{
 
 		Personagem p;
 		String input = MyIO.readLine();
-
-
-		Arq.openRead(input);
-		String s = Arq.readLine();
-
-		String[] a = Personagem.parsePersonagem(s);
-
-		for(String pe : a){
-			MyIO.println(pe);
-		}
-/*
-		while(!isFim(input)){
+		input = Personagem.toUtf(input);
+		while(!Personagem.isFim(input)){
 			p = new Personagem(input);
 			p.imprimir();
+			input = MyIO.readLine();
+			input = Personagem.toUtf(input);
 		}	
-*/
-	}
 
-	
+	}	
 
 }
