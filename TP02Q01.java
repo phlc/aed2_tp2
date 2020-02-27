@@ -32,8 +32,10 @@ class Personagem {
 
 	Personagem(String endereco){
 		Arq.openRead(endereco);
-		String person = Arq.readLine();
+		String lida = Arq.readLine();
 		Arq.close();
+		
+		String[] dados = parsePersonagem(lida);
 
 		
 	}
@@ -259,7 +261,25 @@ class Personagem {
 		return(new String(s.getBytes("ISO-8859-1"), "UTF-8"));
 	}
 
+ //parsePersonagem
+	/**
+	*parsePersonagem - Separa os atributos do personagem de uma String
+	*@param String
+	*@return String[]
+	*/
+	public static String[] parsePersonagem(String s){
+		String[] dados = new String[9];
 
+		s = s.replaceAll("\'", "");
+		s = s.replaceAll("\\s", "");
+		s = s.replaceAll(":", ",");
+		String[] parsed = s.split(",");
+		
+		for (int i=0; i<9; i++){
+			dados[i] = parsed[(i*2)+1];
+		}
+		return (dados);
+	}
 }
 
 /**
@@ -271,7 +291,25 @@ public class TP02Q01{
 	*Metodo main
 	*/
 	public static void main(String[] args){
-	
+
+		Personagem p;
+		String input = MyIO.readLine();
+
+
+		Arq.openRead(input);
+		String s = Arq.readLine();
+
+		String[] a = Personagem.parsePersonagem(s);
+
+		for(String pe : a){
+			MyIO.println(pe);
+		}
+/*
+		while(!isFim(input)){
+			p = new Personagem(input);
+			p.imprimir();
+		}	
+*/
 	}
 
 	
