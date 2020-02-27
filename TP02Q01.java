@@ -224,7 +224,10 @@ class Personagem {
 	public void imprimir(){
 		MyIO.print(" ## "+this.nome);
 		MyIO.print(" ## "+this.altura);
-		MyIO.print(" ## "+this.peso);
+		if (this.peso%1==0)
+			MyIO.print(" ## "+(int)this.peso);
+		else
+			MyIO.print(" ## "+this.peso);
 		MyIO.print(" ## "+this.corDoCabelo);
 		MyIO.print(" ## "+this.corDaPele);
 		MyIO.print(" ## "+this.corDosOlhos);
@@ -288,13 +291,15 @@ class Personagem {
 	private static String[] parsePersonagem(String s){
 		String[] dados = new String[9];
 
-		s = s.replaceAll("\'", "");
-		s = s.replaceAll("\\s", "");
-		s = s.replaceAll(":", ",");
-		String[] parsed = s.split(",");
+		int init = 0;
+		int end = -1;
 		
 		for (int i=0; i<9; i++){
-			dados[i] = parsed[(i*2)+1];
+			init = s.indexOf("\'", end+1)+1;
+			end = s.indexOf("\'", init);
+			init = s.indexOf("\'", end+1)+1;
+			end = s.indexOf("\'", init);
+			dados[i] = s.substring(init, end);
 		}
 		return (dados);
 	}
