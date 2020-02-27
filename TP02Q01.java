@@ -45,6 +45,7 @@ class Personagem {
 			this.altura = 0;
 		}
 		try{
+			dados[2]=dados[2].replaceAll(",", "");
 			this.peso = Double.parseDouble(dados[2]);
 		}
 		catch(Exception e){
