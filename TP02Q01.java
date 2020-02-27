@@ -6,18 +6,18 @@ class Personagem {
 //atributos
 	private String nome;
 	private int altura;
-	private int peso;
+	private double peso;
 	private String corDoCabelo;
 	private String corDaPele;
 	private String corDosOlhos;
 	private String anoNascimento;
-	private int genero;
+	private String genero;
 	private String homeworld;
 
 //construtores
-	Personagem(String nome, int altura, int peso, String corDoCabelo,
+	Personagem(String nome, int altura, double peso, String corDoCabelo,
 		   String corDaPele, String corDosOlhos, String anoNascimento,
-		   int genero, String homeworld){
+		   String genero, String homeworld){
 
 		this.nome = nome;
 		this.altura = altura;
@@ -29,7 +29,14 @@ class Personagem {
 		this.genero = genero;
 		this.homeworld = homeworld;
 	}
-	
+
+	Personagem(String endereco){
+		Arq.openRead(endereco);
+		String person = Arq.readLine();
+		Arq.close();
+
+		
+	}
 
 //metodos
  //gets
@@ -51,14 +58,14 @@ class Personagem {
 
 	/*
 	*getPeso
-	*@return int peso
+	*@return double peso
 	*/
-	public int getPeso(){
+	public double getPeso(){
 		return(this.peso);
 	}
 	
 	/*
-	*get corDocabelo
+	*get corDoCabelo
 	*@return String corDoCabelo 
 	*/
 	public String getCorDoCabelo(){
@@ -91,9 +98,9 @@ class Personagem {
 
 	/*
 	*getGenero
-	*@return int genero
+	*@return String genero
 	*/
-	public int getGenero(){
+	public String getGenero(){
 		return(this.genero);
 	}
 
@@ -124,9 +131,9 @@ class Personagem {
 
 	/*
 	*setPeso
-	*@param int peso
+	*@param double peso
 	*/
-	public void setPeso(int peso){
+	public void setPeso(double peso){
 		this.peso = peso;
 	}
 
@@ -164,9 +171,9 @@ class Personagem {
 
 	/*
 	*setGenero
-	*@param int genero
+	*@param String genero
 	*/
-	public void setGenero(int genero){
+	public void setGenero(String genero){
 		this.genero = genero;
 	}
 
