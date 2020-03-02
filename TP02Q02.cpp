@@ -277,10 +277,13 @@ void preencherPersonagem(Personagem* p_person, char* s){
 	}
 
 	strcpy(p_person->nome, buffer[0]);
-	sscanf(buffer[1], "%d", &p_person->altura);
 	
+	if (0 == sscanf(buffer[1], "%d", &p_person->altura))//testar unknown
+		p_person->altura=0;
+
 	removeChar(',', buffer[2]); //retirar virgula do peso	
-	sscanf(buffer[2], "%lf", &p_person->peso);
+	if (0 == sscanf(buffer[2], "%lf", &p_person->peso))//testar unknown
+		p_person->peso=0;
 
 	strcpy(p_person->corDoCabelo, buffer[3]);
 	strcpy(p_person->corDaPele, buffer[4]);
