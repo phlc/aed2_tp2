@@ -1,3 +1,11 @@
+/*
+Ciencia da Computação - Pucminas
+AEDs II
+Pedro Henrique Lima Carvalho
+Matricula: 651230
+TP 2 - Q01
+*/
+
 /**
 * Classe Personagem
 */
