@@ -93,6 +93,24 @@ Personagem* constructor2(char* endereco){
 }
 
 /*
+*removeChar
+*@param char, char*
+*/
+void removeChar (char c, char* s){
+	int pre = 0;
+	int pos = 0;
+		
+	while (s[pre]!='\0'){
+		if (s[pre]!=c){
+			s[pos] = s[pre];
+			pos++;
+		}
+		pre++;
+	}
+	s[pos]='\0';
+}
+
+/*
 *mallocPerson
 *@param Personagem*
 */
@@ -228,9 +246,10 @@ void preencherPersonagem(Personagem* p_person, char* s){
 	int c_buffer= 0;
 	int c_s=0;
 	int init = 0;
-	int end = 0;
+	int end = -1;
 		
 	for (int i=0; i<9; i++){
+		init=end+1;
 		while (s[init]!='\''){
 			init++;
 		}
@@ -250,11 +269,25 @@ void preencherPersonagem(Personagem* p_person, char* s){
 		c_s=init+1;
 		while(c_s<end){
 			buffer[i][c_buffer] = s[c_s];
+			buffer[i][c_buffer+1]='\0';
 			c_buffer++;
 			c_s++;
 		}
 		c_buffer=0;
 	}
+
+	strcpy(p_person->nome, buffer[0]);
+	sscanf(buffer[1], "%d", &p_person->altura);
+	
+	removeChar(',', buffer[2]); //retirar virgula do peso	
+	sscanf(buffer[2], "%lf", &p_person->peso);
+
+	strcpy(p_person->corDoCabelo, buffer[3]);
+	strcpy(p_person->corDaPele, buffer[4]);
+	strcpy(p_person->corDosOlhos, buffer[5]);
+	strcpy(p_person->anoNascimento, buffer[6]);
+	strcpy(p_person->genero, buffer[7]);
+	strcpy(p_person->homeworld, buffer[8]);
 		
 }
 
