@@ -10,6 +10,8 @@ TP02 - Q02
 //dependencias
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
+
 
 /**
 * Struct Personagem
@@ -29,6 +31,14 @@ typedef struct Personagem{
 
 } Personagem;
 
+
+//declaracoes
+
+void mallocPerson (Personagem* p_person);
+
+void preencherPersonagem(Personagem* p_person, char* s);
+
+
 //construtores
 
 /*
@@ -38,7 +48,7 @@ typedef struct Personagem{
 */
 Personagem* constructor1 (char* nome, int altura, double peso, char* corDoCabelo,
 		   char* corDaPele, char* corDosOlhos, char* anoNascimento,
-		   String genero, String homeworld){
+		   char* genero, char* homeworld){
 
 	Personagem* p_person = (Personagem*) malloc(sizeof(Personagem)*1);
 	p_person->nome = nome;
@@ -55,7 +65,7 @@ Personagem* constructor1 (char* nome, int altura, double peso, char* corDoCabelo
 }
 
 /*
-*constructor1
+*constructor2
 *@param char* endereco arquivo
 *@return Personagem
 */
@@ -145,7 +155,7 @@ void imprimir(Personagem* p_person){
 	printf("%s%s", " ## ", p_person->nome);
 	printf("%s%d", " ## ", p_person->altura);
 	printf("%s%g", " ## ", p_person->peso);
-	printf("%s%s", " ## ", p_perosn->corDoCabelo);
+	printf("%s%s", " ## ", p_person->corDoCabelo);
 	printf("%s%s", " ## ", p_person->corDaPele);
 	printf("%s%s", " ## ", p_person->corDosOlhos);
 	printf("%s%s", " ## ", p_person->anoNascimento);
@@ -204,7 +214,7 @@ char*  ler(Personagem* p_person){
 *@param char*
 *@return boolean
 */
-boolean isFim(char* s){
+bool isFim(char* s){
 	return (strcmp(s, "FIM") == 0);
 }
 
@@ -214,17 +224,36 @@ boolean isFim(char* s){
 *@param Personagem*, char*
 */
 void preencherPersonagem(Personagem* p_person, char* s){
-	char* buffer = (char*) malloc(sizeof(char)*100);
-
+	char buffer[9][100];
+	int c_buffer= 0;
+	int c_s=0;
 	int init = 0;
-	int end = -1;
+	int end = 0;
 		
 	for (int i=0; i<9; i++){
-		init = s.indexOf("\'", end+1)+1;
-		end = s.indexOf("\'", init);
-		init = s.indexOf("\'", end+1)+1;
-		end = s.indexOf("\'", init);
-		dados[i] = s.substring(init, end);
+		while (s[init]!='\''){
+			init++;
+		}
+		end=init+1;
+		while (s[end]!='\''){
+			end++;
+		}
+		init=end+1;
+		while (s[init]!='\''){
+			init++;
+		}
+		end=init+1;
+		while (s[end]!='\''){
+			end++;
+		}
+		
+		c_s=init+1;
+		while(c_s<end){
+			buffer[i][c_buffer] = s[c_s];
+			c_buffer++;
+			c_s++;
+		}
+		c_buffer=0;
 	}
 		
 }
@@ -234,18 +263,20 @@ void preencherPersonagem(Personagem* p_person, char* s){
 */
 int  main(void){
 
-	Personagem p;
+	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
 
-	fgets(input, 99, stdio);
+	fgets(input, 99, stdin);
 	input[strlen(input)-1]='\0';
 		
 	while(!isFim(input)){
 		p = constructor2(input);
 		imprimir(p);
-		fgets(input, 99, stdio);
+		freePerson(p);
+		free(p);
+		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
 	}	
 }	
 
-}
+
