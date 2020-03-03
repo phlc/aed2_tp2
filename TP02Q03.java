@@ -313,6 +313,8 @@ class Personagem {
 		return (dados);
 	}
 }
+
+
 /**
 *Classe Lista
 */
@@ -356,13 +358,13 @@ class Lista{
 	*inserirFim - insere um elemento no fim da lista
 	*@param Personagem elemento
 	*/
-	public void inserirFim(Personagem person){
+	public void inserirFim(Personagem person) throws Exception{
 		if (this.fim < this.tamanho){
 			this.list[fim] = person;
 			this.fim++;
 		}
 		else{
-			MyIO.println("Erro - Lista Cheia");
+			throw new Exception("Erro - Lista Cheia");
 		}
 	}
 	
@@ -370,9 +372,9 @@ class Lista{
 	*inserir - insere um elemento em determinada posicao
 	*@param Personagem elemento, int posicao
 	*/
-	public void inserir(Personagem person, int pos){
+	public void inserir(Personagem person, int pos) throws Exception{
 		if (this.fim < pos){
-			MyIO.println("Erro - Lista menor que posicao");
+			throw new Exception("Erro - Lista menor que posicao");
 		}
 		else if (this.fim < this.tamanho){
 			for (int i=fim; i>pos; i--){
@@ -383,7 +385,7 @@ class Lista{
 			this.fim++;
 		}	
 		else{
-			MyIO.println("Erro - Lista Cheia");
+			throw new Exception("Erro - Lista Cheia");
 		}
 	}
 
@@ -392,11 +394,11 @@ class Lista{
 	*removerInicio - remove um elemento do inicio da lista
 	*@return Personagem elemento
 	*/
-	public Personagem removerInicio(){
+	public Personagem removerInicio() throws Exception{
 		Personagem person;
 
 		if (this.fim < 1){
-			MyIO.println("Erro - Lista Vazia");
+			throw new Exception("Erro - Lista Vazia");
 		}
 		else{
 			person = this.list[0];
@@ -414,11 +416,11 @@ class Lista{
 	*removerFim - remove um elemento do fim da lista
 	*@return Personagem elemento
 	*/
-	public Personagem removerFim(){
+	public Personagem removerFim() throws Exception{
 		Personagem person;
 
 		if (this.fim < 1){
-			MyIO.println("Erro - Lista Vazia");
+			throw new Exception("Erro - Lista Vazia");
 		}
 		else{
 			person = this.list[this.fim - 1];
@@ -432,14 +434,14 @@ class Lista{
 	*@param int posicao
 	*@return Personagem elemento
 	*/
-	public Personagem remover(int pos){
+	public Personagem remover(int pos) throws Exception{
 		Personagem person;
 		
 		if (this.fim < 1){
-			MyIO.println("Erro - Lista Vazia");
+			throw new Exception("Erro - Lista Vazia");
 		}
 		else if (this.fim <= pos){
-			MyIO.println("Erro - Posicao Vazia");
+			throw new Exception("Erro - Posicao Vazia");
 		}
 		else{
 			person = this.list[pos];
@@ -451,6 +453,10 @@ class Lista{
 		return person;
 	}
 
+ //mostrar
+	/**
+	*mostrar lista
+	**/
 }
 
 
@@ -463,13 +469,12 @@ public class TP02Q03{
 	*Metodo main
 	*/
 	public static void main(String[] args) throws Exception{
+		Lista list = new Lista();
 
-		Personagem p;
 		String input = MyIO.readLine();
 		input = Personagem.toUtf(input);
 		while(!Personagem.isFim(input)){
-			p = new Personagem(input);
-			p.imprimir();
+			list.inserirFim(new Personagem(input));
 			input = MyIO.readLine();
 			input = Personagem.toUtf(input);
 		}	
