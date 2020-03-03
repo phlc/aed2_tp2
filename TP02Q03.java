@@ -250,14 +250,20 @@ class Personagem {
 //ler
 	/*
 	*ler
-	*@return
+	*@return String com dados do personagem
 	*/
 	public String ler(){
-		return( " ## "+this.nome+" ## "+this.altura+" ## "+this.peso+
-		       " ## "+this.corDoCabelo+" ## "+this.corDaPele+" ## "+
-		       this.corDosOlhos+" ## "+this.anoNascimento+" ## "+this.genero+
-		       " ## "+this.homeworld+" ## ");	
-	}
+		String s = " ## "+this.nome+" ## "+this.altura+" ## ";
+
+		if (this.peso%1==0)
+			s = s + (int)this.peso;
+		else
+			s = s + this.peso;
+		s = s + " ## "+this.corDoCabelo+" ## "+this.corDaPele+" ## "+ 
+		        this.corDosOlhos+" ## "+this.anoNascimento+" ## "+this.genero+
+		        " ## "+this.homeworld+" ## ";	
+		return s;
+		}
 
 //metodos estaticos publicos
 
@@ -341,7 +347,7 @@ class Lista{
 	*inserirInicio - insere um elemento no inicio da lista
 	*@param Personagem elemento
 	*/
-	public void inserirInicio(Personagem person){
+	public void inserirInicio(Personagem person) throws Exception{
 		if (this.fim < this.tamanho){
 			for (int i=fim; i>0; i--){
 				this.list[i]=this.list[i-1];
@@ -350,7 +356,7 @@ class Lista{
 			this.fim++;
 		}	
 		else{
-			MyIO.println("Erro - Lista Cheia");
+			throw new Exception("Erro - Lista Cheia");
 		}
 	}
 
@@ -449,6 +455,7 @@ class Lista{
 				this.list[pos] = this.list[pos+1];
 				pos++;
 			}
+			this.fim--;
 		}
 		return person;
 	}
@@ -457,6 +464,43 @@ class Lista{
 	/**
 	*mostrar lista
 	**/
+	public void mostrar(){
+		for (int i=0; i<this.fim; i++){
+			MyIO.println("["+i+"] "+ this.list[i].ler());
+		}
+	}
+
+ //comandos
+	/**
+	*comandos - executa os comandos contidos em uma string
+	*@param String com comandos
+	*/
+	public void comandos(String s) throws Exception{
+		String[] parsed = s.split(" ");
+
+		if (parsed[0].equals("II")){
+			this.inserirInicio(new Personagem(parsed[1]));
+		}
+		else if (parsed[0].equals("IF")){
+			this.inserirFim(new Personagem(parsed[1]));
+		}
+		else if (parsed[0].equals("I*")){
+			this.inserir(new Personagem(parsed[2]), Integer.parseInt(parsed[1]));
+		}
+		else if (parsed[0].equals("RI")){
+			Personagem p = this.removerInicio();
+			MyIO.println("(R) "+p.getNome());
+		}
+		else if (parsed[0].equals("RF")){
+			Personagem p = this.removerFim();
+			MyIO.println("(R) "+p.getNome());
+		}		
+		else if (parsed[0].equals("R*")){
+			Personagem p = this.remover(Integer.parseInt(parsed[1]));
+			MyIO.println("(R) "+p.getNome());
+
+		}
+	}
 }
 
 
@@ -477,8 +521,16 @@ public class TP02Q03{
 			list.inserirFim(new Personagem(input));
 			input = MyIO.readLine();
 			input = Personagem.toUtf(input);
-		}	
-
+		}
+		
+		int n = MyIO.readInt();
+		
+		for (int i=0; i<n; i++){
+			input = MyIO.readLine();
+			input = Personagem.toUtf(input);
+			list.comandos(input);	
+		}
+		list.mostrar();
 	}	
 
 }
