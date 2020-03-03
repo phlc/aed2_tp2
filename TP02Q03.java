@@ -501,6 +501,15 @@ class Lista{
 
 		}
 	}
+ //zerarPeso
+	/**
+	*zerarPeso - zera o peso dos elementos da lista
+	*/
+	public void zerarPeso(){
+		for (int i=0; i<this.fim; i++){
+			this.list[i].setPeso(0.0);
+		}
+	}
 }
 
 
@@ -518,7 +527,7 @@ public class TP02Q03{
 		String input = MyIO.readLine();
 		input = Personagem.toUtf(input);
 		while(!Personagem.isFim(input)){
-			list.inserirFim(new Personagem(input));
+			list.inserirFim( new Personagem(input));
 			input = MyIO.readLine();
 			input = Personagem.toUtf(input);
 		}
@@ -530,6 +539,10 @@ public class TP02Q03{
 			input = Personagem.toUtf(input);
 			list.comandos(input);	
 		}
+
+		//zerar peso
+		list.zerarPeso();
+
 		list.mostrar();
 	}	
 
