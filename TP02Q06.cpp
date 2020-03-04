@@ -294,240 +294,140 @@ void preencherPersonagem(Personagem* p_person, char* s){
 	strcpy(p_person->homeworld, buffer[8]);
 		
 }
-//----------------------------------- Lista ---------------------------------
+//----------------------------------- Fila Circular ---------------------------------
 
 /**
-*struct Lista
+*struct Fila
 */
-typedef struct Lista{
+typedef struct Fila{
  
 //atributos
 	int tamanho;
+	int inicio;
 	int fim;
 	Personagem** list;
-}Lista;
+}Fila;
 
 //construtor
 /**
-*construtorLista - inicializa uma lista
+*construtorFila - inicializa uma Fila
 *@param int tamanho
 *@return list*
 */
-Lista* construtorLista (int size){
+Fila* construtorFila (int size){
 
-	Lista* p_lista;
+	Fila* p_fila;
 
 	if (size < 1){
 		printf("%s\n", "Erro - Tamanho da Lista Invalido");
 	}
 	else{
-		p_lista = (Lista*) malloc (sizeof(Lista)*1);	
-		p_lista->tamanho = size;
-		p_lista->fim = 0;
-		p_lista->list = (Personagem**) malloc(sizeof(Personagem*)*size);
+		p_fila = (Fila*) malloc (sizeof(Fila)*1);	
+		p_fila->tamanho = size;
+		p_fila->inicio = 0;
+		p_fila->fim = 0;
+		p_fila->list = (Personagem**) malloc(sizeof(Personagem*)*size);
 	}
-	return p_lista;
+	return p_fila;
 }
 
 //metodos
 
 /**
-*inserirInicio - insere um elemento no inicio da lista
-*@param Lista* Personagem*
-*/
-void inserirInicio(Lista* p_lista, Personagem* p_person){
-	if (p_lista->fim < p_lista->tamanho){
-		for (int i=p_lista->fim; i>0; i--){
-			p_lista->list[i] = p_lista->list[i-1];
-		}
-		p_lista->list[0] = p_person;
-		p_lista->fim++;
-	}
-	else{
-		printf("%s\n", "Erro - Lista Cheia");
-	}
-}
-
-/**
-*inserirFim - insere um elemento no fim da lista
-*@param Lista* Personagem*
-*/
-void inserirFim (Lista* p_lista, Personagem* p_person){
-	if (p_lista->fim < p_lista->tamanho){
-		p_lista->list[p_lista->fim] = p_person;
-		p_lista->fim++;
-	}
-	else{
-		printf("%s\n", "Erro - Lista Cheia");
-	}
-}
-
-/**
-*inserir - insere um elemento em determinada posicao
-*@param Lista*, Personagem*, int posicao
-*/
-void inserir (Lista* p_lista, Personagem* p_person, int pos){
-	if (p_lista->fim >= p_lista->tamanho){
-		printf("%s\n", "Erro - Lista Cheia");
-	}
-	else{
-		if (p_lista->fim < pos){
-			printf("%s\n", "Erro - Lista menor que posicao");
-		}
-		else{
-			for (int i=p_lista->fim; i>pos; i--){
-				p_lista->list[i] = p_lista->list[i-1];
-			}
-			p_lista->list[pos] = p_person;
-			p_lista->fim++;
-		}
-	}
-}
-
-/**
-*removerInicio - remove um elemento do inicio da lista
+*desenfileirar - remove um elemento inicio da fila
 *@return Personagem*
 */
-Personagem* removerInicio (Lista* p_lista){
+Personagem* desenfileirar (Fila* p_fila){
 	Personagem* p_person;
 
-	if (p_lista->fim < 1){
-		printf("%s\n", "Erro - Lista Vazia");
+	if (p_fila->inicio == p_fila->fim){
+		printf("%s\n", "Erro - fila Vazia");
 	}
 	else{
-		p_person = p_lista->list[0];
-		for (int i=1; i<p_lista->fim; i++){
-			p_lista->list[i-1] = p_lista->list[i];
-		}
-		p_lista->fim--;
-	}		
-	return p_person;	
-}
-
-/**
-*removerFim - remove um elemento do fim da lista
-*@return Personagem*
-*/
-Personagem* removerFim (Lista* p_lista){
-	Personagem* p_person;
-
-	if (p_lista->fim < 1){
-		printf("%s\n", "Erro - Lista Vazia");
-	}
-	else{
-		p_person = p_lista->list[p_lista->fim-1];
-		p_lista->fim--;
+		p_person = p_fila->list[(p_fila->inicio)%p_fila->tamanho];
+		p_fila->inicio++;
 	}
 	return p_person;
 }
 
-/**
-*remover - remove um elemento da posicao
-*@param int posicao
-*@return Personagem*
-*/
-Personagem* remover (Lista* p_lista, int pos){
-	Personagem* p_person;
+//declaracao de mediaAlturas
+void mediaAltura(Fila* p_fila);
 
-	if (p_lista->fim < 1){
-		printf("%s\n", "Erro - Lista Vazia");
+/**
+*enfileirar - insere um elemento no final da fila
+*@param Fila* Personagem*
+*/
+void enfileirar(Fila* p_fila, Personagem* p_person){
+	if ((p_fila->fim+1)%p_fila->tamanho == (p_fila->inicio)%p_fila->tamanho){
+		p_fila->list[p_fila->fim%p_fila->tamanho]=p_person;
+		p_fila->fim++;
 	}
 	else{
-		if (pos >= p_lista->fim){
-			printf("%s\n", "Erro - Posicao Vazia");
-		} 
-		else{
-			p_person = p_lista->list[pos];
-			while(pos+1 < p_lista->fim){
-				p_lista->list[pos] = p_lista->list[pos+1];
-				pos++;
-			}
-			p_lista->fim--;
-		}
+		desenfileirar (p_fila);
+		enfileirar(p_fila, p_person);
 	}
-	return p_person;
+	
+	
 }
 
 /**
-*mostrar lista
-*@param Lista*
+*mostrar fila
+*@param Fila*
 */
-void mostrar(Lista* p_lista){
-	for (int i=0; i<p_lista->fim; i++){
+void mostrar(Fila* p_fila){
+	for (int i=0; i<p_fila->fim; i++){
 		printf("%s%d%s", "[", i, "] ");
-		imprimir(p_lista->list[i]);
+		imprimir(p_fila->list[i]);
 	} 
 }
 
 /**
 *comandos - executa os comandos contidos em uma string
-*@param Lista*. char* com comando
+*@param Fila*. char* com comando
 */
-void comandos (Lista* p_lista, char* input){
+void comandos (Fila* p_fila, char* input){
 	char* cmd;
-	char* n;
 	char* path;
-	int pos;
 	Personagem* p_person;
 
 	cmd = strtok(input, " ");
 
-	if (strcmp(cmd, "II")==0){
+	if (strcmp(cmd, "I")==0){
 		path = strtok (NULL, " ");
 		p_person = constructor2(path);
-		inserirInicio(p_lista, p_person);
+		enfileirar(p_fila, p_person);
 	}	
-	if (strcmp(cmd, "IF")==0){
-		path = strtok (NULL, " ");
-		p_person = constructor2(path);
-		inserirFim(p_lista, p_person);	
-	}
-	if (strcmp(cmd, "I*")==0){
-		n = strtok(NULL, " ");
-		sscanf(n, "%d", &pos);
-		path = strtok (NULL, " ");
-		p_person = constructor2(path);
-		inserir(p_lista, p_person, pos);	
-	}
-	if (strcmp(cmd, "RI")==0){
-		p_person = removerInicio(p_lista);
-		printf("%s%s\n", "(R) ", p_person->nome);
-		freePerson(p_person);
-	}
-	if (strcmp(cmd, "RF")==0){
-		p_person = removerFim(p_lista);
-		printf("%s%s\n", "(R) ", p_person->nome);
-		freePerson(p_person);
-	}
 
-	if (strcmp(cmd, "R*")==0){
-		n = strtok (NULL, " ");
-		sscanf(n, "%d", &pos);
-		p_person = remover(p_lista, pos);
+	if (strcmp(cmd, "R")==0){
+		p_person = desenfileirar(p_fila);
 		printf("%s%s\n", "(R) ", p_person->nome);
 		freePerson(p_person);
 	}
 }
 
 /**
-*freeLista - libera a memoria da lista
+*freeFila - libera a memoria da fila
 *@param Lista*
 */
-void freeLista (Lista* p_lista){
-	for (int i=0; i<p_lista->fim; i++){
-		freePerson(p_lista->list[i]);
+void freeFila (Fila* p_fila){
+	for (int i=0; i<p_fila->fim; i++){
+		freePerson(p_fila->list[i]);
 	}
-	free(p_lista);
+	free(p_fila);
 }
 
 /**
-*zerarPesos
-*@param Lista*
+*mediaAlturas
+*@param Fila*
 */
-void zerarPesos(Lista* p_lista){
-	for (int i=0; i<p_lista->fim; i++){
-		p_lista->list[i]->peso=0.0;
+void mediaAltura(Fila* p_fila){
+	int m = 0;
+	for (int i=0; i<p_fila->fim; i++){
+		m = m + p_fila->list[i]->altura;
 	}
+	m = m/p_fila->fim;
+
+	printf("%d\n", m);
 }
 
 
@@ -539,7 +439,7 @@ void zerarPesos(Lista* p_lista){
 */
 int  main(void){
         
-	Lista* p_lista = construtorLista(100);
+	Fila* p_fila = construtorFila(6);
 
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
@@ -549,7 +449,7 @@ int  main(void){
 		
 	while(!isFim(input)){
 		p = constructor2(input);
-		inserirFim(p_lista, p);
+		enfileirar(p_fila, p);
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
 	}	
@@ -562,11 +462,10 @@ int  main(void){
 	for (int i=0; i<n; i++){
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
-		comandos(p_lista, input);
+		comandos(p_fila, input);
 	}
-	zerarPesos(p_lista);
-	mostrar(p_lista);
-	freeLista(p_lista);
+	mostrar(p_fila);
+	freeFila(p_fila);
 }	
 
 
