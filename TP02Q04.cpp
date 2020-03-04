@@ -459,8 +459,54 @@ void mostrar(Lista* p_lista){
 	} 
 }
 
+/**
+*comandos - executa os comandos contidos em uma string
+*@param Lista*. char* com comando
+*/
+void comandos (Lista* p_lista, char* input){
+	char* cmd;
+	char* n;
+	char* path;
+	int pos;
+	Personagem* p_person;
 
+	cmd = strtok(input, " ");
 
+	if (strcmp(cmd, "II")==0){
+		path = strtok (NULL, " ");
+		printf("%s", path);
+		p_person = constructor2(path);
+		inserirInicio(p_lista, p_person);
+	}	
+	if (strcmp(cmd, "IF")==0){
+		path = strtok (NULL, " ");
+		p_person = constructor2(path);
+		inserirFim(p_lista, p_person);	
+	}
+	if (strcmp(cmd, "I*")==0){
+		n = strtok(NULL, " ");
+		sscanf(n, "%d", &pos);
+		path = strtok (NULL, " ");
+		p_person = constructor2(path);
+		inserir(p_lista, p_person, pos);	
+	}
+	if (strcmp(cmd, "RI")==0){
+		p_person = removerInicio(p_lista);
+		printf("%s%s\n", "(R) ", p_person->nome);
+	}
+	if (strcmp(cmd, "RF")==0){
+		p_person = removerFim(p_lista);
+		printf("%s%s\n", "(R) ", p_person->nome);
+	}
+
+	if (strcmp(cmd, "R*")==0){
+		n = strtok (NULL, " ");
+		sscanf(n, "%d", &pos);
+		p_person = remover(p_lista, pos);
+		printf("%s%s\n", "(R) ", p_person->nome);
+	}
+
+}
 //----------------------------------- Main ---------------------------------
 
 
@@ -483,7 +529,18 @@ int  main(void){
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
 	}	
-	
+	int n = 0;
+
+	fgets(input, 99, stdin);
+	input[strlen(input)-1]='\0';
+	sscanf(input, "%d", &n);
+
+	for (int i=0; i<n; i++){
+		fgets(input, 99, stdin);
+		input[strlen(input)-1]='\0';
+		comandos(p_lista, input);
+	}
+
 	mostrar(p_lista);
 }	
 
