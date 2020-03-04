@@ -4,7 +4,7 @@ Pedro Henrique Lima Carvalho
 Matricula: 651230
 AEDs 2
 
-TP02 - Q02
+TP02 - Q04
 */
 
 //dependencias
@@ -12,6 +12,7 @@ TP02 - Q02
 #include <stdlib.h>
 #include <string.h>
 
+// ----------------------------------- Personagem  ---------------------------------
 
 /**
 * Struct Personagem
@@ -293,6 +294,135 @@ void preencherPersonagem(Personagem* p_person, char* s){
 	strcpy(p_person->homeworld, buffer[8]);
 		
 }
+//----------------------------------- Lista ---------------------------------
+
+/**
+*struct Lista
+*/
+typedef struct Lista{
+ 
+//atributos
+	int tamanho;
+	int fim;
+	Personagem** list;
+}Lista;
+
+//construtor
+/**
+*construtorLista - inicializa uma lista
+*@param int tamanho
+*@return list*
+*/
+Lista* construtorLista (int size){
+
+	Lista* p_lista;
+
+	if (size < 1){
+		printf("%s\n", "Erro - Tamanho da Lista Invalido");
+	}
+	else{
+		p_lista = (Lista*) malloc (sizeof(Lista)*1);	
+		p_lista->tamanho = size;
+		p_lista->fim = 0;
+		p_lista->list = (Personagem**) malloc(sizeof(Personagem*)*size);
+	}
+	return p_lista;
+}
+
+//metodos
+
+/**
+*inserirInicio - insere um elemento no inicio da lista
+*@param Lista* Personagem*
+*/
+void inserirInicio(Lista* p_lista, Personagem* p_person){
+	if (p_lista->fim < p_lista->tamanho){
+		for (int i=p_lista->fim; i>0; i++){
+			p_lista->list[i] = p_lista->list[i-1];
+		}
+		p_lista->list[0] = p_person;
+		p_lista->fim++;
+	}
+	else{
+		printf("%s\n", "Erro - Lista Cheia");
+	}
+}
+
+/**
+*inserirFim - insere um elemento no fim da lista
+*@param Lista* Personagem*
+*/
+void inserirFim (Lista* p_lista, Personagem* p_person){
+	if (p_lista->fim < p_lista->tamanho){
+		p_lista->list[p_lista->fim] = p_person;
+		p_lista->fim++;
+	}
+	else{
+		printf("%s\n", "Erro - Lista Cheia");
+	}
+}
+
+/**
+*inserir - insere um elemento em determinada posicao
+*@param Lista*, Personagem*, int posicao
+*/
+void inserir (Lista* p_lista, Personagem* p_person, int pos){
+	if (p_lista->fim >= p_lista->tamanho){
+		printf("%s\n", "Erro - Lista Cheia");
+	}
+	else{
+		if (p_lista->fim < pos){
+			printf("%s\n", "Erro - Lista menor que posicao");
+		}
+		else{
+			for (int i=p_lista->fim; i>pos; i--){
+				p_lista->list[i] = p_lista->list[i-1];
+			}
+			p_lista->list[pos] = p_person;
+			p_lista->fim++;
+		}
+	}
+}
+
+/**
+*removerInicio - remove um elemento do inicio da lista
+*@return Personagem*
+*/
+Personagem* removerInicio (Lista* p_lista){
+	Personagem* p_person;
+
+	if (p_lista->fim < 1){
+		printf("%s\n", "Erro - Lista Vazia");
+	}
+	else{
+		p_person = p_lista->list[0];
+		for (int i=1; i<p_lista->fim; i++){
+			p_lista->list[i-1] = p_lista->list[i];
+		}
+		p_lista->fim--;
+	}		
+	return p_person;	
+}
+
+/**
+*removerFim - remove um elemento do fim da lista
+*@return Personagem*
+*/
+Personagem* removerFim (Lista* p_lista){
+	Personagem* p_person;
+
+	if (p_lista->fim < 1){
+		printf("%s\n", "Erro - Lista Vazia");
+	}
+	else{
+		p_person = p_lista->list[p_lista->fim-1];
+		p_lista->fim--;
+	}
+	return p_person;
+}
+
+//----------------------------------- Main ---------------------------------
+
 
 /**
 *Metodo main
