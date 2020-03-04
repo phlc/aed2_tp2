@@ -358,9 +358,11 @@ void mediaAltura(Fila* p_fila);
 *@param Fila* Personagem*
 */
 void enfileirar(Fila* p_fila, Personagem* p_person){
-	if ((p_fila->fim+1)%p_fila->tamanho == (p_fila->inicio)%p_fila->tamanho){
+	if ((p_fila->fim+1)%p_fila->tamanho != p_fila->inicio%p_fila->tamanho){
 		p_fila->list[p_fila->fim%p_fila->tamanho]=p_person;
 		p_fila->fim++;
+
+		mediaAltura(p_fila);
 	}
 	else{
 		desenfileirar (p_fila);
@@ -375,9 +377,9 @@ void enfileirar(Fila* p_fila, Personagem* p_person){
 *@param Fila*
 */
 void mostrar(Fila* p_fila){
-	for (int i=0; i<p_fila->fim; i++){
+	for (int i=p_fila->inicio; i<p_fila->fim; i++){
 		printf("%s%d%s", "[", i, "] ");
-		imprimir(p_fila->list[i]);
+		imprimir(p_fila->list[i%p_fila->tamanho]);
 	} 
 }
 
@@ -410,8 +412,8 @@ void comandos (Fila* p_fila, char* input){
 *@param Lista*
 */
 void freeFila (Fila* p_fila){
-	for (int i=0; i<p_fila->fim; i++){
-		freePerson(p_fila->list[i]);
+	for (int i=p_fila->inicio; i<p_fila->fim; i++){
+		freePerson(p_fila->list[i%p_fila->tamanho]);
 	}
 	free(p_fila);
 }
@@ -422,10 +424,10 @@ void freeFila (Fila* p_fila){
 */
 void mediaAltura(Fila* p_fila){
 	int m = 0;
-	for (int i=0; i<p_fila->fim; i++){
-		m = m + p_fila->list[i]->altura;
+	for (int i=p_fila->inicio; i<p_fila->fim; i++){
+		m = m + p_fila->list[i%p_fila->tamanho]->altura;
 	}
-	m = m/p_fila->fim;
+	m = m/(p_fila->fim - p_fila->inicio);
 
 	printf("%d\n", m);
 }
