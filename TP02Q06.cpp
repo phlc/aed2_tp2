@@ -423,13 +423,15 @@ void freeFila (Fila* p_fila){
 *@param Fila*
 */
 void mediaAltura(Fila* p_fila){
-	int m = 0;
+	double m = 0.0;
 	for (int i=p_fila->inicio; i<p_fila->fim; i++){
 		m = m + p_fila->list[i%p_fila->tamanho]->altura;
 	}
 	m = m/(p_fila->fim - p_fila->inicio);
-
-	printf("%d\n", m);
+	
+	if (m-(int)m >= 0.5)
+		m += 0.5;
+	printf("%d\n",(int) m);
 }
 
 
