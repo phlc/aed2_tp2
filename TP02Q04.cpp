@@ -337,7 +337,7 @@ Lista* construtorLista (int size){
 */
 void inserirInicio(Lista* p_lista, Personagem* p_person){
 	if (p_lista->fim < p_lista->tamanho){
-		for (int i=p_lista->fim; i>0; i++){
+		for (int i=p_lista->fim; i>0; i--){
 			p_lista->list[i] = p_lista->list[i-1];
 		}
 		p_lista->list[0] = p_person;
@@ -474,7 +474,6 @@ void comandos (Lista* p_lista, char* input){
 
 	if (strcmp(cmd, "II")==0){
 		path = strtok (NULL, " ");
-		printf("%s", path);
 		p_person = constructor2(path);
 		inserirInicio(p_lista, p_person);
 	}	
@@ -493,10 +492,12 @@ void comandos (Lista* p_lista, char* input){
 	if (strcmp(cmd, "RI")==0){
 		p_person = removerInicio(p_lista);
 		printf("%s%s\n", "(R) ", p_person->nome);
+		freePerson(p_person);
 	}
 	if (strcmp(cmd, "RF")==0){
 		p_person = removerFim(p_lista);
 		printf("%s%s\n", "(R) ", p_person->nome);
+		freePerson(p_person);
 	}
 
 	if (strcmp(cmd, "R*")==0){
@@ -504,9 +505,32 @@ void comandos (Lista* p_lista, char* input){
 		sscanf(n, "%d", &pos);
 		p_person = remover(p_lista, pos);
 		printf("%s%s\n", "(R) ", p_person->nome);
+		freePerson(p_person);
 	}
-
 }
+
+/**
+*freeLista - libera a memoria da lista
+*@param Lista*
+*/
+void freeLista (Lista* p_lista){
+	for (int i=0; i<p_lista->fim; i++){
+		freePerson(p_lista->list[i]);
+	}
+	free(p_lista);
+}
+
+/**
+*zerarPesos
+*@param Lista*
+*/
+void zerarPesos(Lista* p_lista){
+	for (int i=0; i<p_lista->fim; i++){
+		p_lista->list[i]->peso=0.0;
+	}
+}
+
+
 //----------------------------------- Main ---------------------------------
 
 
@@ -540,8 +564,9 @@ int  main(void){
 		input[strlen(input)-1]='\0';
 		comandos(p_lista, input);
 	}
-
+	zerarPesos(p_lista);
 	mostrar(p_lista);
+	freeLista(p_lista);
 }	
 
 
