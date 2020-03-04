@@ -421,6 +421,46 @@ Personagem* removerFim (Lista* p_lista){
 	return p_person;
 }
 
+/**
+*remover - remove um elemento da posicao
+*@param int posicao
+*@return Personagem*
+*/
+Personagem* remover (Lista* p_lista, int pos){
+	Personagem* p_person;
+
+	if (p_lista->fim < 1){
+		printf("%s\n", "Erro - Lista Vazia");
+	}
+	else{
+		if (pos >= p_lista->fim){
+			printf("%s\n", "Erro - Posicao Vazia");
+		} 
+		else{
+			p_person = p_lista->list[pos];
+			while(pos+1 < p_lista->fim){
+				p_lista->list[pos] = p_lista->list[pos+1];
+				pos++;
+			}
+			p_lista->fim--;
+		}
+	}
+	return p_person;
+}
+
+/**
+*mostrar lista
+*@param Lista*
+*/
+void mostrar(Lista* p_lista){
+	for (int i=0; i<p_lista->fim; i++){
+		printf("%s%d%s", "[", i, "] ");
+		imprimir(p_lista->list[i]);
+	} 
+}
+
+
+
 //----------------------------------- Main ---------------------------------
 
 
@@ -428,6 +468,8 @@ Personagem* removerFim (Lista* p_lista){
 *Metodo main
 */
 int  main(void){
+        
+	Lista* p_lista = construtorLista(100);
 
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
@@ -437,12 +479,12 @@ int  main(void){
 		
 	while(!isFim(input)){
 		p = constructor2(input);
-		imprimir(p);
-		freePerson(p);
-		free(p);
+		inserirFim(p_lista, p);
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
 	}	
+	
+	mostrar(p_lista);
 }	
 
 
