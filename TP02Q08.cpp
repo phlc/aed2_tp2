@@ -522,7 +522,7 @@ void freeLista (Lista* p_lista){
 
 /**
 *zerarPesos
-*@param Lista*
+*@param Lista*c
 */
 void zerarPesos(Lista* p_lista){
 	for (int i=0; i<p_lista->fim; i++){
@@ -544,13 +544,13 @@ int pesquisaBinNome(Lista* p_lista, char* nome, int inicio, int fim){
 		resp = 1;
 	}
 	else{
-		if(strcmp(p_lista->lista[n]->nome, nome)<0){
+		if(strcmp(p_lista->list[n]->nome, nome)>0){
 			if(inicio<fim){
 				resp = pesquisaBinNome(p_lista, nome, inicio, n);
 			}
 		}
 		else{
-			if(inicio<fim){
+			if(inicio<fim-1){
 				resp = pesquisaBinNome(p_lista, nome, n, fim);
 			}
 		}
@@ -583,19 +583,22 @@ int  main(void){
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
 	}	
-	int n = 0;
 
 	fgets(input, 99, stdin);
 	input[strlen(input)-1]='\0';
-	sscanf(input, "%d", &n);
 
-	for (int i=0; i<n; i++){
+	while(!isFim(input)){
+
+		if (pesquisaBinNome(p_lista, input, 0, p_lista->fim)){
+			printf("%s\n", "SIM");
+		}
+		else{
+			printf("%s\n", "NAO");	
+		}
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
-		comandos(p_lista, input);
 	}
-	zerarPesos(p_lista);
-	mostrar(p_lista);
+
 	freeLista(p_lista);
 }	
 
