@@ -6,6 +6,8 @@ Matricula: 651230
 TP 2 - Q07
 */
 
+import java.util.Date;
+
 /**
 * Classe Personagem
 */
@@ -525,7 +527,9 @@ class Lista{
 	
 		return resp;
 	}
+
 }
+
 
 /**
 *Classe Main
@@ -533,11 +537,22 @@ class Lista{
 public class TP02Q07{
 	
 	/**
+	*tempo
+	*@return long tempo
+	*/
+	public static long tempo(){
+		return (new Date().getTime());
+	}
+
+	/**
 	*Metodo main
 	*/
 	public static void main(String[] args) throws Exception{
 		Lista list = new Lista();
-
+		long inicio;
+		long fim;
+		int n = 0;
+		
 		String input = MyIO.readLine();
 		input = Personagem.toUtf(input);
 		while(!Personagem.isFim(input)){
@@ -545,6 +560,8 @@ public class TP02Q07{
 			input = MyIO.readLine();
 			input = Personagem.toUtf(input);
 		}
+		
+		inicio = tempo();
 		
 		input = MyIO.readLine();
 		input = Personagem.toUtf(input);
@@ -557,7 +574,18 @@ public class TP02Q07{
 			}
 			input = MyIO.readLine();
 			input = Personagem.toUtf(input);
+			
+			n++;
 		}
+		
+		fim = tempo();
+	
+		double segundos = ((double)(fim-inicio)) /1000.0;
+		
+		//arquivo log
+		Arq.openWrite("651230_sequencial.txt");
+		Arq.print("651230\t"+segundos+"\t"+n);
+		Arq.close();
 	}	
 
 }
