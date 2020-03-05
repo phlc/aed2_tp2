@@ -426,6 +426,9 @@ void mediaAltura(Fila* p_fila){
 	double m = 0.0;
 	for (int i=p_fila->inicio; i<p_fila->fim; i++){
 		m = m + p_fila->list[i%p_fila->tamanho]->altura;
+		
+		//zerar pesos
+		p_fila->list[i%p_fila->tamanho]->peso=0.0;
 	}
 	m = m/(p_fila->fim - p_fila->inicio);
 	
