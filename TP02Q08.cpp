@@ -11,6 +11,7 @@ TP02 - Q08
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <time.h>
 
 // ----------------------------------- Personagem  ---------------------------------
 
@@ -573,7 +574,9 @@ int  main(void){
 
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
-
+	
+	int n = 0;
+	
 	fgets(input, 99, stdin);
 	input[strlen(input)-1]='\0';
 		
@@ -587,6 +590,8 @@ int  main(void){
 	fgets(input, 99, stdin);
 	input[strlen(input)-1]='\0';
 
+	clock_t inicio = clock();
+	
 	while(!isFim(input)){
 
 		if (pesquisaBinNome(p_lista, input, 0, p_lista->fim)){
@@ -597,8 +602,18 @@ int  main(void){
 		}
 		fgets(input, 99, stdin);
 		input[strlen(input)-1]='\0';
+		
+		n++;
 	}
+	
+	clock_t fim = clock();
+	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
+	//arquivo log
+	FILE* log = fopen("651230_binaria.txt", "wt");
+	fprintf (log, "%s\t%lf\t%d", "651230", segundos, n);
+	fclose(log);	
+ 
 	freeLista(p_lista);
 }	
 
