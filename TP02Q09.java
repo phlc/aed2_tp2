@@ -543,7 +543,7 @@ class Lista{
 		int ref = 0;
 
 		for (int i=1; i<this.fim; i++){
-			for (int j=i; j<this.fim-1; j++){
+			for (int j=i; j<this.fim; j++){
 			    n[0]++;
 			    if (this.list[ref].getNome().compareTo(this.list[j].getNome())>0)
 				ref = j;
