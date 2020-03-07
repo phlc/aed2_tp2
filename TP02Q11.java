@@ -544,7 +544,7 @@ class Lista{
 	
 		for (int i=1; i<this.fim; i++){
 			int j = i;
-			while(j>0 && this.list[j].getAno().compareTo(this.list[j-1].getAno())>0){
+			while(j>0 && this.list[j-1].getAnoNascimento().compareTo(this.list[j].getAnoNascimento())>0){
 				n[0]++;
 				n[1]+=3;
 				this.swap(j-1, j);
@@ -561,7 +561,7 @@ class Lista{
 /**
 *Classe Main
 */
-public class TP02Q09{
+public class TP02Q11{
 
 	/**
 	*tempo
@@ -594,7 +594,7 @@ public class TP02Q09{
 		double segundos = ((double)(fim-inicio)) / 1000.0;
 
 		//arquivo log
-		Arq.openWrite("651230_selecao.txt");
+		Arq.openWrite("651230_insercao.txt");
 		Arq.print("651230\t"+n[0]+"\t"+n[1]+"\t"+segundos);
 		Arq.close();
 	
