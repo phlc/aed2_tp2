@@ -575,13 +575,15 @@ void swap(Lista* p_lista, int i, int j){
 *@param Lista*, int ref
 *@return int small
 */
-int getSmaller(Lista* p_lista, int ref){
+int getSmaller(Lista* p_lista, int ref, int log[]){
 	
 	int small = ref;
 	int retorno = small;
 	
 	if (ref < p_lista->fim -1)	
-		retorno = getSmaller(p_lista, ++ref);
+		retorno = getSmaller(p_lista, ++ref, log);
+	
+	log[0]++;
 	if (0< strcmp(p_lista->list[small]->nome, p_lista->list[retorno]->nome))
 		small = retorno;
 	
@@ -592,14 +594,15 @@ int getSmaller(Lista* p_lista, int ref){
 *ordenarSelecaoRec - ordena recursivamente pelo metodo selecao
 *@param Lista*
 */
-void ordenarSelecaoRec (Lista* p_lista, int ref){
+void ordenarSelecaoRec (Lista* p_lista, int ref, int log[]){
 	
-	int small = getSmaller(p_lista, ref);
-	
+	int small = getSmaller(p_lista, ref, log);
+
+	log[1]+=3;	
 	swap(p_lista, ref, small);	
 
 	if (ref < p_lista->fim-1){
-		ordenarSelecaoRec(p_lista, ++ref);
+		ordenarSelecaoRec(p_lista, ++ref, log);
 	}
 }
 
@@ -612,7 +615,7 @@ void ordenarSelecaoRec (Lista* p_lista, int ref){
 int  main(void){
         
 	Lista* p_lista = construtorLista(100);
-
+	int log[] = {0, 0};
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
 	
@@ -628,7 +631,7 @@ int  main(void){
 	}	
 
 	clock_t inicio = clock();
-	ordenarSelecaoRec(p_lista, 0);
+	ordenarSelecaoRec(p_lista, 0, log);
 	clock_t fim = clock();
 
 	mostrar(p_lista);
@@ -636,9 +639,9 @@ int  main(void){
 	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
 	//arquivo log
-	FILE* log = fopen("651230_selecaoRecursiva.txt", "a");
-	fprintf (log, "\t%lf", segundos);
-	fclose(log);	
+	FILE* arq = fopen("651230_selecaoRecursiva.txt", "wt");
+	fprintf (arq, "%s\t%d\t%d\t%lf","651230", log[0], log[1], segundos);
+	fclose(arq);	
  
 	freeLista(p_lista);
 }	
