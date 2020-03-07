@@ -575,8 +575,17 @@ void swap(Lista* p_lista, int i, int j){
 *@param Lista*, int ref
 *@return int small
 */
-int getSmaller(Lista*, int ref){
-
+int getSmaller(Lista* p_lista, int ref){
+	
+	int small = ref;
+	int retorno = small;
+	
+	if (ref < p_lista->fim -1)	
+		retorno = getSmaller(p_lista, ++ref);
+	if (0< strcmp(p_lista->list[small]->nome, p_lista->list[retorno]->nome))
+		small = retorno;
+	
+	return small;
 }
 
 /**
@@ -584,9 +593,13 @@ int getSmaller(Lista*, int ref){
 *@param Lista*
 */
 void ordenarSelecaoRec (Lista* p_lista, int ref){
-	if (ref+1 < p_lista->fim){
 	
+	int small = getSmaller(p_lista, ref);
 	
+	swap(p_lista, ref, small);	
+
+	if (ref < p_lista->fim-1){
+		ordenarSelecaoRec(p_lista, ++ref);
 	}
 }
 
@@ -603,7 +616,6 @@ int  main(void){
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
 	
-	int n = 0;
 	
 	fgets(input, 99, stdin);
 	input[strlen(input)-1]='\0';
@@ -616,14 +628,16 @@ int  main(void){
 	}	
 
 	clock_t inicio = clock();
-	ordenarSelecaoRec(p_lista);
+	ordenarSelecaoRec(p_lista, 0);
 	clock_t fim = clock();
+
+	mostrar(p_lista);
 
 	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
 	//arquivo log
-	FILE* log = fopen("651230_selecaoRecursiva.txt", "wt");
-	fprintf (log, "%s\t%lf\t%d", "651230", segundos, n);
+	FILE* log = fopen("651230_selecaoRecursiva.txt", "a");
+	fprintf (log, "\t%lf", segundos);
 	fclose(log);	
  
 	freeLista(p_lista);
