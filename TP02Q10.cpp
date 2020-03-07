@@ -461,6 +461,16 @@ void mostrar(Lista* p_lista){
 }
 
 /**
+*mostrar2 lista
+*@param Lista*
+*/
+void mostrar2(Lista* p_lista){
+	for (int i=0; i<p_lista->fim; i++){
+		imprimir(p_lista->list[i]);
+	} 
+}
+
+/**
 *comandos - executa os comandos contidos em uma string
 *@param Lista*. char* com comando
 */
@@ -634,7 +644,7 @@ int  main(void){
 	ordenarSelecaoRec(p_lista, 0, log);
 	clock_t fim = clock();
 
-	mostrar(p_lista);
+	mostrar2(p_lista);
 
 	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
