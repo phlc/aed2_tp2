@@ -541,14 +541,43 @@ class Lista{
 		
 	  //criar heap
 	  for (int i=1; i<this.fim; i++){
-	    int j = i+1;
-	    while (j>1 && this.list[j-1].getAltura()>=this.list[(j/2)-1].getAltura()){
-		swap(j-1,(j/2)-1);
-		j=j/2;
-	    }
-	  }	
+	  	int j = i+1;
+	    	while (j>1 && this.list[j-1].getAltura()>=this.list[(j/2)-1].getAltura()){
+		  	swap(j-1,(j/2)-1);
+		  	j=j/2;
+	    	}
+	  }
+	
+	  //ordenar destruindo heap
+	  for (int i=this.fim-1; i>0; i--){
+		
+		swap(0, i);
+		
+		//reoganizar heap
+		int j=1;
+		while ((j*2)-1 < i){
+		   if ((j*2 < i) && (this.list[j*2].getAltura()>this.list[(j*2)-1].getAltura())){
+			if (this.list[j-1].getAltura()<this.list[j*2].getAltura()){
+				swap(j-1, j*2);
+				j=(j*2)+1;
+			}
+			else{
+				j=i;
+			}	
+		   }
+		   else {
+			if (this.list[j-1].getAltura()<this.list[(j*2)-1].getAltura()){
+				swap(j-1, (j*2)-1);
+				j=(j*2);
+		   	}
+			else{
+				j=i;
+			}
+		   }
+		
+		}
+	  }
 	}
-
 }
 
 
