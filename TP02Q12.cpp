@@ -588,13 +588,25 @@ void insercaoCor(Lista* p_lista, int cor, int h, int log[]){
 	
 	for (int i=cor+h; i<p_lista->fim; i+=h){
 		int j = i;
+		
+		log[0]++;
 		while(j>cor && p_lista->list[j]->peso<=p_lista->list[j-h]->peso){
+			
+			log[0]++;
 			if (p_lista->list[j]->peso == p_lista->list[j-h]->peso){
-				if(0<strcmp(p_lista->list[j]->nome, p_lista->list[j-h]->nome))
+				log[0]++;
+				if(strcmp(p_lista->list[j]->nome, p_lista->list[j-h]->nome)<0){
+					log[1]++;
 					swap(p_lista, j, j-h);
-			}	
-			swap(p_lista, j, j-h);
+				}
+			}
+			else{ 
+				log[1]++;	
+				swap(p_lista, j, j-h);
+			}
+			
 			j-=h;
+			log[0]++;
 		}
 	}
 }
