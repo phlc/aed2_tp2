@@ -543,20 +543,9 @@ class Lista{
 	  for (int i=1; i<this.fim; i++){
 	  	int j = i+1;
 	    	while (j>1 && this.list[j-1].getAltura()>=this.list[(j/2)-1].getAltura()){
-		  	if(this.list[j-1].getAltura()==this.list[(j/2)-1].getAltura()){
-				if(this.list[j-1].getNome().compareTo(this.list[(j/2)-1].getNome())>0){
-					swap(j-1, (j/2)-1);
-					j=j/2;
-				}
-				else{
-					j=1;
-				}
-			}
-			else{
-				swap(j-1,(j/2)-1);
-		  		j=j/2;
-	    		}
-		}
+		  	swap(j-1,(j/2)-1);
+		  	j=j/2;
+	    	}
 	  }
 	
 	  //ordenar destruindo heap
