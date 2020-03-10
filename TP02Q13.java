@@ -272,7 +272,7 @@ class Personagem {
 	*@param Personagem a ser comparado e int da operacao
 	*@return <0 se this menor q param, 0 se igual, >0 se maior
 	*/
-	public double comparteTo (Personagem p, int op){
+	public double compareTo (Personagem p, int op){
 		double resp = 0.0;
 	
 		switch (op){	
@@ -299,7 +299,7 @@ class Personagem {
 			 break;
 			case 8:
 			 resp = this.homeworld.compareTo(p.homeworld);
-			 break;;
+			 break;
 			default:
 				resp = this.nome.compareTo(p.nome);
 		}
@@ -581,8 +581,14 @@ class Lista{
 	*@param int[] log para n comparacoes e n movimentacoes
 	*/
 	public void ordenarHeapSort(int[] log){
-		
-	}	  
+		for (int i=1; i<this.fim; i++){
+			MyIO.print("1- ");
+			this.list[i-1].imprimir();
+			MyIO.print("2- ");
+			this.list[i].imprimir();
+			MyIO.println("CompareTo: "+this.list[i-1].compareTo(this.list[i], 1));
+		}	
+	} 
 }
 
 
