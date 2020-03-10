@@ -638,17 +638,26 @@ void ordenarQuickSort (Lista* p_lista, int esq, int dir, int log[]){
 	Personagem* pivo = p_lista->list[(j+i)/2];
         
 	while (i<=j){
+		
+		log[0]+=2;		
+
 		while (compare(p_lista->list[i], pivo, 3)<0.0){
 			i++;
+
+			log[0]++;
 		}
 		while (compare(p_lista->list[j], pivo, 3)>0.0){
 			j--;
+
+			log[0]++;
 		}
 
 		if(i<=j){
 			swap(p_lista, i,j);
 			i++;
 			j--;
+
+			log[1]+=3;
 		}
 	}
 
@@ -671,7 +680,7 @@ void ordenarQuickSort (Lista* p_lista, int esq, int dir, int log[]){
 int  main(void){
         
 	Lista* p_lista = construtorLista(100);
-	int log[] = {0, 0};
+	int log[] ={0, 0};
 	Personagem* p;
 	char* input = (char*) malloc(sizeof(char) * 100);
 	
