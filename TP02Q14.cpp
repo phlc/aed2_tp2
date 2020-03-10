@@ -627,52 +627,39 @@ void swap(Lista* p_lista, int i, int j){
 }
 
 /**
-*insercaoCor - ordena pelo Metodo insercao por cor
+*ordenarQuickSort - ordena metodo quicksort
 *@param Lista*, int log[]
 */
-void insercaoCor(Lista* p_lista, int cor, int h, int log[]){
+void ordenarQuickSort (Lista* p_lista, int esq, int dir, int log[]){
 	
-	for (int i=cor+h; i<p_lista->fim; i+=h){
-		int j = i;
-		
-		log[0]++;
-		while(j>cor && p_lista->list[j]->peso<=p_lista->list[j-h]->peso){
-			
-			log[0]++;
-			if (p_lista->list[j]->peso == p_lista->list[j-h]->peso){
-				log[0]++;
-				if(strcmp(p_lista->list[j]->nome, p_lista->list[j-h]->nome)<0){
-					log[1]++;
-					swap(p_lista, j, j-h);
-				}
-			}
-			else{ 
-				log[1]++;	
-				swap(p_lista, j, j-h);
-			}
-			
-			j-=h;
-			log[0]++;
+	int i = esq;
+	int j = dir;
+
+	int pivo = (j+i)/2;
+        
+	while (i<=j){
+		while (i<=j && compare(p_lista->list[i], p_lista->list[pivo], 3)<0){
+			i++;
+		}
+		while (i<=j && compare(p_lista->list[j], p_lista->list[pivo], 3)>0){
+			j--;
+		}
+
+		if(i<=j){
+			swap(p_lista, i,j);
+			i++;
+			j--;
 		}
 	}
-}
 
-/**
-*ordenarShellSort - ordena metodo shellsort
-*@param Lista*, int log[]
-*/
-void ordenarShellSort (Lista* p_lista, int log[]){
+        if (esq<pivo){
+		ordenarQuickSort(p_lista, esq, pivo-1, log);
+	}
+	if (pivo<dir){
+		ordenarQuickSort(p_lista, pivo+1, dir, log);
+	}
+
 	
-	int h = 1;
-
-	do {h=(h*3)+1;} while (h<p_lista->fim);
-
-	do{
-		h/=3;
-		for(int cor=0; cor<h; cor++){
-			insercaoCor(p_lista, cor, h, log);
-		}
-	}while (h!=1);
 }
 
 //----------------------------------- Main ---------------------------------
@@ -700,7 +687,7 @@ int  main(void){
 	}	
 
 	clock_t inicio = clock();
-	ordenarShellSort(p_lista, log);
+	ordenarQuickSort(p_lista, 0, p_lista->fim-1,  log);
 	clock_t fim = clock();
 
 	mostrar2(p_lista);
@@ -708,7 +695,7 @@ int  main(void){
 	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
 	//arquivo log
-	FILE* arq = fopen("651230_shellsort.txt", "wt");
+	FILE* arq = fopen("651230_quicksort.txt", "wt");
 	fprintf (arq, "%s\t%d\t%d\t%lf","651230", log[0], log[1], segundos);
 	fclose(arq);	
  
