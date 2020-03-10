@@ -588,6 +588,7 @@ class Lista{
 		int maior = (int) (this.list[0].getPeso()*10);		
 
 		for (int i=1; i<this.fim; i++){
+			log[0]++;
 			if (maior < ( (int) (this.list[i].getPeso()*10))){
 				maior = (int) (this.list[i].getPeso()*10);
 			}
@@ -604,6 +605,7 @@ class Lista{
 		}
 
 		for (int i=this.fim-1; i>=0; i--){
+			log[1]++;
 			ordenada.list[contagem[((int)(this.list[i].getPeso() * 10))]-1]=this.list[i];
 			contagem[(int) (this.list[i].getPeso()*10)]--; 
 		}
