@@ -635,13 +635,13 @@ void ordenarQuickSort (Lista* p_lista, int esq, int dir, int log[]){
 	int i = esq;
 	int j = dir;
 
-	int pivo = (j+i)/2;
+	Personagem* pivo = p_lista->list[(j+i)/2];
         
 	while (i<=j){
-		while (i<=j && compare(p_lista->list[i], p_lista->list[pivo], 3)<0){
+		while (compare(p_lista->list[i], pivo, 3)<0.0){
 			i++;
 		}
-		while (i<=j && compare(p_lista->list[j], p_lista->list[pivo], 3)>0){
+		while (compare(p_lista->list[j], pivo, 3)>0.0){
 			j--;
 		}
 
@@ -652,11 +652,11 @@ void ordenarQuickSort (Lista* p_lista, int esq, int dir, int log[]){
 		}
 	}
 
-        if (esq<pivo){
-		ordenarQuickSort(p_lista, esq, pivo-1, log);
+        if (esq<j){
+		ordenarQuickSort(p_lista, esq, j, log);
 	}
-	if (pivo<dir){
-		ordenarQuickSort(p_lista, pivo+1, dir, log);
+	if (i<dir){
+		ordenarQuickSort(p_lista, i, dir, log);
 	}
 
 	
