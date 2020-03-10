@@ -586,22 +586,35 @@ class Lista{
 	  //criar heap
 	  for (int i=1; i<this.fim; i++){
 	  	int j = i+1;
+
+		log[0]++;
 	    	while (j>1 && (this.list[j-1].compareTo(this.list[(j/2)-1], 1)>0)){
-		  	swap(j-1,(j/2)-1);
+		  	
+			log[1]+=3;
+			swap(j-1,(j/2)-1);
 		  	j=j/2;
+
+			log[0]++;
 	    	}
 	  }
 	
 	  //ordenar destruindo heap
 	  for (int i=this.fim-1; i>0; i--){
 		
+		log[1]+=3;
 		swap(0, i);
 		
 		//reoganizar heap
 		int j=1;
 		while ((j*2)-1 < i){
+		   
+		   log[0]++;
 		   if ((j*2 < i) && (this.list[j*2].compareTo(this.list[(j*2)-1], 1)>0)){
+			
+			log[0]++;
 			if (this.list[j*2].compareTo(this.list[j-1],1)>0){
+				
+				log[1]+=3;
 				swap(j-1, j*2);
 				j=(j*2)+1;
 			}
@@ -610,7 +623,11 @@ class Lista{
 			}	
 		   }
 		   else {
+			
+			log[0]++;
 			if (this.list[(j*2)-1].compareTo(this.list[j-1],1)>0){
+				
+				log[1]+=3;
 				swap(j-1, (j*2)-1);
 				j=(j*2);
 		   	}
@@ -662,7 +679,7 @@ public class TP02Q13{
 		double segundos = ((double)(fim-inicio)) / 1000.0;
 
 		//arquivo log
-		Arq.openWrite("651230_insercao.txt");
+		Arq.openWrite("651230_heapsort.txt");
 		Arq.print("651230\t"+log[0]+"\t"+log[1]+"\t"+segundos);
 		Arq.close();
 	
