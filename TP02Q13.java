@@ -267,6 +267,49 @@ class Personagem {
 		return s;
 		}
 
+//compareTo
+	/*
+	*@param Personagem a ser comparado e int da operacao
+	*@return <0 se this menor q param, 0 se igual, >0 se maior
+	*/
+	public double comparteTo (Personagem p, int op){
+		double resp = 0.0;
+	
+		switch (op){	
+			case 1:
+  			 resp = this.altura - p.altura;
+			 break;
+			case 2:
+			 resp = this.peso - p.peso;
+			 break;
+			case 3:
+			 resp = this.corDoCabelo.compareTo(p.corDoCabelo);
+			 break;
+			case 4:
+			 resp = this.corDaPele.compareTo(p.corDaPele);
+			 break;
+			case 5:
+			 resp = this.corDosOlhos.compareTo(p.corDosOlhos);
+			 break;
+			case 6:
+			 resp = this.anoNascimento.compareTo(p.anoNascimento);
+			 break;
+			case 7:
+			 resp = this.genero.compareTo(p.genero);
+			 break;
+			case 8:
+			 resp = this.homeworld.compareTo(p.homeworld);
+			 break;;
+			default:
+				resp = this.nome.compareTo(p.nome);
+		}
+		
+		if (resp==0){
+			resp = this.nome.compareTo(p.nome);
+		}
+		return resp;
+	}	
+
 //metodos estaticos publicos
 
  //isFim
@@ -539,56 +582,7 @@ class Lista{
 	*/
 	public void ordenarHeapSort(int[] log){
 		
-	  //criar heap
-	  for (int i=1; i<this.fim; i++){
-	  	int j = i+1;
-	    	while (j>1 && this.list[j-1].getAltura()>=this.list[(j/2)-1].getAltura()){
-		  	if(this.list[j-1].getAltura()==this.list[(j/2)-1].getAltura()){
-				if(this.list[j-1].getNome().compareTo(this.list[(j/2)-1].getNome())>0){
-					swap(j-1, (j/2)-1);
-					j=j/2;
-				}
-				else{
-					j=1;
-				}
-			}
-			else{
-				swap(j-1,(j/2)-1);
-		  		j=j/2;
-	    		}
-		}
-	  }
-	
-	  //ordenar destruindo heap
-	  for (int i=this.fim-1; i>0; i--){
-		
-		swap(0, i);
-		
-		//reoganizar heap
-		int j=1;
-		while ((j*2)-1 < i){
-		   if ((j*2 < i) && (this.list[j*2].getAltura()>this.list[(j*2)-1].getAltura())){
-			if (this.list[j-1].getAltura()<this.list[j*2].getAltura()){
-				swap(j-1, j*2);
-				j=(j*2)+1;
-			}
-			else{
-				j=i;
-			}	
-		   }
-		   else {
-			if (this.list[j-1].getAltura()<this.list[(j*2)-1].getAltura()){
-				swap(j-1, (j*2)-1);
-				j=(j*2);
-		   	}
-			else{
-				j=i;
-			}
-		   }
-		
-		}
-	  }
-	}
+	}	  
 }
 
 
