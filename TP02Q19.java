@@ -596,7 +596,7 @@ class Lista{
 		
 		int ref = 0; 		
 
-		for (int i=1; i<this.fim; i++){
+		for (int i=1; i<this.fim && i<=k; i++){
 			for (int j=i; j<this.fim; j++){
 				log[0]++;
 				if(this.list[ref].compareTo(this.list[j], 0)>0){
@@ -648,7 +648,7 @@ public class TP02Q19{
 		double segundos = ((double)(fim-inicio)) / 1000.0;
 
 		//arquivo log
-		Arq.openWrite("651230_selecao.txt");
+		Arq.openWrite("651230_selecaoParcial.txt");
 		Arq.print("651230\t"+log[0]+"\t"+log[1]+"\t"+segundos);
 		Arq.close();
 	
