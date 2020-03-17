@@ -700,6 +700,7 @@ Lista* ordenarRadixSort (Lista* p_lista, int log[]){
 
 
 	for (int i=0; i<p_lista->fim; i++){
+		log[0]++;
 		if( casas_decimais < p_lista->list[i]->altura){
 			casas_decimais = p_lista->list[i]->altura;
 		}
@@ -724,7 +725,7 @@ Lista* ordenarRadixSort (Lista* p_lista, int log[]){
 		}	
 		
 		for (int i=p_lista->fim-1; i>=0; i--){
-
+			log[1]++;
 			int pos = contagem[getPos(p_lista->list[i], casa)];
 			p_ordenada->list[pos-1]=p_lista->list[i];
 			contagem[getPos(p_lista->list[i], casa)]--;
