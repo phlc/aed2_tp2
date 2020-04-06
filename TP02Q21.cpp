@@ -526,16 +526,6 @@ void mostrar3(Lista* p_lista, int k){
 	}
 }
 
-/**
-*mostrar4 - mostra de tras para frente
-*@param Lista*, int k numero de elementos
-*/
-void mostrar4(Lista* p_lista, int k){
-	for (int i=p_lista->fim-1, l=0; i>0 && l<k; i--, l++){
-		imprimir(p_lista->list[i]);
-	}
-}
-
 
 /**
 *comandos - executa os comandos contidos em uma string
@@ -653,12 +643,12 @@ void swap(Lista* p_lista, int i, int j){
 */
 void ordenarHeapSortParcial (Lista* p_lista, int k, int log[]){
 
-	//montar heap
-	for (int i=1; i<p_lista->fim; i++){
+	//montar heap com 10 primeiros
+	for (int i=1; i<k; i++){
 		int j=i+1;
 		
 		log[0]++;
-		while (j>1 && (compare(p_lista->list[j-1], p_lista->list[j/2-1], 1)<0.0)){
+		while (j>1 && (compare(p_lista->list[j-1], p_lista->list[j/2-1], 1)>0.0)){
 			log[0]++;
 			log[1]+=3;
 			swap(p_lista, j-1, j/2-1);
@@ -666,39 +656,78 @@ void ordenarHeapSortParcial (Lista* p_lista, int k, int log[]){
 		}
 	} 
 
+	for (int i=k+1; i<p_lista->fim+1; i++){
+		log[0]++;
+		if (compare(p_lista->list[i-1], p_lista->list[0], 1)<0.0){
+			log[1]+=3;
+			swap(p_lista, 0, i-1);
+
+			//remontar heap
+			int j=1;
+
+			while (j*2<=k){
+				log[0]++;
+				if(j*2+1<=k && compare(p_lista->list[j*2],p_lista->list[j*2-1],1)>0.0){
+					log[0]++;
+					if(compare(p_lista->list[j-1],p_lista->list[j*2],1)<0.0){
+						log[1]+=3;
+						swap(p_lista, j-1, j*2);
+						j=j*2+1;
+					}
+					else{
+						j=k+1;
+					}
+				}
+				else{
+					log[0]++;
+					if(compare(p_lista->list[j-1],p_lista->list[j*2-1],1)<0.0){
+						log[1]+=3;
+						swap(p_lista, j-1, j*2-1);
+						j=j*2;
+					}
+					else{
+						j=k+1;
+					}
+				}
+			}
+		}
+	}
+
+
 	//desmontar heap
-	for (int i=p_lista->fim-1, l=0; i>0 && l<k; i--, l++){
+	for (int i=k; i>0; i--){
 		log[1]+=3;
-		swap(p_lista, 0, i);
-		
+		swap(p_lista, 0, i-1);
+			
+
 		//remontar heap
 		int j=1;
 
-		while (j*2<i+1){
+		while (j*2<i){
 			log[0]++;
-			if(j*2+1<=i && compare(p_lista->list[j*2-1],p_lista->list[j*2],1)>0.0){
+			if(j*2+1<i && compare(p_lista->list[j*2],p_lista->list[j*2-1],1)>0.0){
 				log[0]++;
-				if(compare(p_lista->list[j-1],p_lista->list[j*2],1)>0.0){
+				if(compare(p_lista->list[j-1],p_lista->list[j*2],1)<0.0){
 					log[1]+=3;
 					swap(p_lista, j-1, j*2);
 					j=j*2+1;
 				}
 				else{
-					j=i;
+					j=k+1;
 				}
 			}
 			else{
 				log[0]++;
-				if(compare(p_lista->list[j-1],p_lista->list[j*2-1],1)>0.0){
+				if(compare(p_lista->list[j-1],p_lista->list[j*2-1],1)<0.0){
 					log[1]+=3;
 					swap(p_lista, j-1, j*2-1);
 					j=j*2;
 				}
 				else{
-					j=i;
+					j=k+1;
 				}
 			}
-		} 
+		}
 	}	
 }
 
@@ -730,7 +759,7 @@ int  main(void){
 	ordenarHeapSortParcial(p_lista, 10,  log);
 	clock_t fim = clock();
 
-	mostrar4(p_lista, 10);
+	mostrar3(p_lista, 10);
 
 	double segundos = (fim - inicio) / (double)CLOCKS_PER_SEC / 1000.0;
 
